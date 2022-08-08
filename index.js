@@ -3,7 +3,7 @@ const express = require('express'),
 
 const app = express();
 
-let topMovies = [
+let allMovies = [
     {
         title: 'Shawshank Redemption',
         year: '1994'
