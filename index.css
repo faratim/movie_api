@@ -1,0 +1,42 @@
+html,
+body {
+	height: 100%;
+    color: white;
+}
+
+body {
+	margin: 0 2rem 1rem;
+	background: black;
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+table {
+	width: 100%;
+	border-collapse: separate;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+}
+
+th {
+	text-align: center;
+}
+
+.opening-text {
+    max-width: 35rem;
+}
