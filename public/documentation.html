@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css" type="text/css">
     <title>myFlix API Documentation</title>
 </head>
+
 <body>
     <div>
         <h1>myFlix API Documentation</h1>
-        <p>This API will be used as the server-side 
+        <p class="opening-text">This API will be used as the server-side 
             component for a movie-focused web application called myFlix. 
             Through this API, the web application will allow users to access
-            details about many different movies, directors and genres. 
+            details about many different movies, directors and genres. <br><br>
             Users will have the option to create accounts on the site 
             that will let them create and save lists of their favorite movies. 
             This web app will function through a well-designed REST API and 
             architected database built with JavaScript, Node.js, Express and 
-            MongoDB. The REST API will be accessed via commonly-used HTTP methods 
+            MongoDB. <br><br> The REST API will be accessed via commonly-used HTTP methods 
             like GET and POST, and the common CRUD methods will also be used 
             for data retrieval from the database and non-relational data storage.</p>
     </div>
 
-    <table>
-// HEADER
+<table>
+<!-- HEADER -->
+    <thead>
         <tr>
             <th>Business Logic</th>
             <th>URL</th>
@@ -31,180 +35,195 @@
             <th>Request Body Data Format</th>
             <th>Response Body Data Format</th>
         </tr>
+    </thead>        
 
-// ALL MOVIES
-        <tr>
-            <td>Return a list of all movies to the user</td>
-            <td>/movies</td>
-            <td>GET</td>
-            <td>None</td>
-            <td>A JSON object holding data about all movies in the database</td>
-        </tr>
+    <tbody>
+
+<!-- ALL MOVIES -->
+    <tr>
+        <td>Return a list of all movies to the user</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>A JSON object holding data about all movies in the database</pre></td>
+    </tr>
+
+<!-- SINGLE MOVIE DATA -->
+    <tr>
+        <td>Return data about a single movie by title to the user</td>
+        <td>/movies/:title</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>
+A JSON object that contains data about a user selected movie including description, genre, director, image URL and whether it's featured or not: 
+
+{
+    "Title": "Inception",
+
+    "Description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+
+    "Genre": {
+        "Name": "Thriller",
+    
+        "Description": "Thriller is a genre of fiction, having numerous, often overlapping subgenres. Thrillers are characterized and defined by the moods they elicit, giving viewers heightened feelings of suspense, excitement, surprise, anticipation and anxiety. Successful examples of thrillers are the films of Alfred Hitchcock.",
+    },
+
+    "Director": {
+        "Name": "Christopher Nolan",
         
-// SINGLE MOVIE DATA
+        "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
+
+    },
+
+    "Image URL": "https://irs.www.warnerbros.com/keyart-jpeg/inception_keyart.jpg"
+
+    "Featured": true
+}           </pre>
+        </td>
+    </tr>
+
+<!-- GENRE DATA -->
+    <tr>
+        <td>Return data about a genre</td>
+        <td>/movies/genre/genreName</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>
+A JSON object containing all data about a single genre including its name (e.g., "Thriller") and description.  
+{
+    "Name": "Thriller",
+    
+    "Description": "Thriller is a genre of fiction, having numerous, often overlapping subgenres. Thrillers are characterized and defined by the moods they elicit, giving viewers heightened feelings of suspense, excitement, surprise, anticipation and anxiety. Successful examples of thrillers are the films of Alfred Hitchcock."
+}           </pre>
+        </td>
+    </tr>
+
+<!-- DIRECTOR DATA -->
+    <tr>
+        <td>Return data about a director by name</td>
+        <td>/movies/directors/:directorName</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>
+A JSON object containing all data about a director including name, bio and birth year.  
+{
+    "Name": "Christopher Nolan",
+
+    "Birth Year": 1970
+    
+    "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
+}           </pre>   
+        </td>
+    </tr>
+
+<!-- REGISTER NEW USER     -->
+    <tr>
+        <td>Allow new users to register</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td> <pre>
+A JSON object with the user's name and favorite movies
+{
+    "name": "John Smith",
+    "favoriteMovies": [
+        "Twilight",
+        "The Notebook"
+    ]   
+}           </pre>
+            
+        </td>
+        <td> <pre>
+A JSON object with data about the new user including their name, favorite movies and user id.
+{
+    "name": "Jane Doe",
+    
+    "favoriteMovies": [
+    "Animal World",
+    "Pulp Fiction"
+    ],
+    
+    "id": "77c384ff-6c12-4b16-bebc-ee347468ad77"
+}           </pre>
+        </td>
+    </tr>
+
+
+
+<!-- UPDATE USER INFO -->
+    <tr>
+        <td>Allow users to update information</td>
+        <td>/users/:id</td>
+        <td>POST</td>
+        <td> <pre>
+JSON object with data about user
+
+localhost:8080/users/1
+
+{
+    "Username" : "newUsername"
+}           </pre>
+        </td>
+        <td> <pre>
+A JSON object with the updated information about the user.
+{
+    "Name": "Robert",
+    "Email": "bobby@email.com",
+    "Password": "password123",
+    "favoriteMovies": [],
+    "id": 8a767ba9-2efc-46bf-86f0-443fe742cf6a
+}           </pre> 
+        </td>
+    </tr>
+
+
+<!-- ADD MOVIE TO LIST OF FAVORITES -->
         <tr>
-            <td>Return data about a single movie by title to the user</td>
-            <td>/movies/:title</td>
-            <td>GET</td>
-            <td>None</td>
-            <td>A JSON object that contains data about a user selected movie including description, genre, director, image URL and whether it's featured or not:
-                 {
-                "Title": "Inception",
-                
-                "Description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
-                
-                "Genre": {
-                    "Name": "Thriller",
-                    
-                    "Description": "Thriller is a genre of fiction, having numerous, often overlapping subgenres. Thrillers are characterized and defined by the moods they elicit, giving viewers heightened feelings of suspense, excitement, surprise, anticipation and anxiety. Successful examples of thrillers are the films of Alfred Hitchcock.",
-                },
-
-                "Director": {
-                    "Name": "Christopher Nolan",
-                    
-                    "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
-
-                },
-
-                "Image URL": "https://irs.www.warnerbros.com/keyart-jpeg/inception_keyart.jpg"
-
-                "Featured": true
-            }
+            <td>Allow users to add a movie to their list of favorites</td>
+            <td>users/:id/movieTitle</td>
+            <td>POST</td>
+            <td><pre>localhost:8080/users/1/movies/New%20Movie</pre></td>
+            <td> <pre>
+Text that movie has been added to favorites.
+{
+    Dumb and Dumber has been added to the list of favorites.
+}               </pre>
             </td>
         </tr>
-        
-// GENRE DATA
+
+
+<!-- REMOVE MOVIE FROM LIST OF FAVORITES -->
         <tr>
-            <td>Return data about a genre</td>
-            <td>/movies/genre/genreName</td>
-            <td>GET</td>
-            <td>None</td>
-            <td>A JSON object containing all data about a single genre including its name (e.g., "Thriller") and description.  
-                {
-                    "Name": "Thriller",
-                    
-                    "Description": "Thriller is a genre of fiction, having numerous, often overlapping subgenres. Thrillers are characterized and defined by the moods they elicit, giving viewers heightened feelings of suspense, excitement, surprise, anticipation and anxiety. Successful examples of thrillers are the films of Alfred Hitchcock."
-                }
+            <td>Allow users to remove a movie from their list of favorites</td>
+            <td>users/:id/movies/movieTitle</td>
+            <td>DELETE</td>
+            <td><pre>localhost:8080/users/1/movies/Dumb%20and$20Dumber</pre></td>
+            <td> <pre>
+Text response that the movie has been removed from favorites
+{
+    Dumb and Dumber has been removed from the favorites list.
+}               </pre>    
             </td>
         </tr>
 
-// DIRECTOR DATA
-        <tr>
-            <td>Return data about a director by name</td>
-            <td>/movies/directors/:directorName</td>
-            <td>GET</td>
-            <td>None</td>
-            <td>A JSON object containing all data about a director including name, bio and birth year.  
-                {
-                    "Name": "Christopher Nolan",
 
-                    "Birth Year": 1970
-                    
-                    "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
-                }
+<!-- DEREGISTER AN EXISTING USER -->
+        <tr>
+            <td>Allow an existing user to deregister</td>
+            <td>users/:name</td>
+            <td>DELETE</td>
+            <td><pre>localhost:8080/users/deregister/1</pre></td>
+            <td> <pre>
+Text response that the user has been deregistered
+{
+    "User 1 has been deregistered."
+}               </pre>
             </td>
         </tr>
     
-// REGISTER NEW USER    
-        <tr>
-            <td>Allow new users to register</td>
-            <td>/users</td>
-            <td>POST</td>
-            <td>A JSON object with the user's name and favorite movies
-                {
-                    "name": "John Smith",
-                    "favoriteMovies": [
-                        "Twilight",
-                        "The Notebook"
-                    ]   
-                }
-            </td>
-            <td>A JSON object with data about the new user including their name, favorite movies and user id.
-                {
-                  "name": "Jane Doe",
-                  "favoriteMovies": [
-                      "Animal World",
-                      "Pulp Fiction"
-                  ],
-                  "id": "77c384ff-6c12-4b16-bebc-ee347468ad77"
-                }
-            </td>
-        </tr>
+    </tbody>
 
 
-        
-//UPDATE USER INFO
-        <tr>
-            <td>Allow users to update information</td>
-            <td>/users/:id</td>
-            <td>POST</td>
-            <td>Allows users to update their information, including Name, Favorite Movies, and id. </td>
-            <td>JSON object with data about user
-                localhost:8080/users/1
-                {
-                    "Username" : "newUsername"
-                }
-            </td>
-            <td>A JSON object with the updated information about the user.
-                {
-                    "Name": "Robert",
-                    "Email": "bobby@email.com",
-                    "Password": "password123",
-                    "favoriteMovies": [],
-                    "id": 8a767ba9-2efc-46bf-86f0-443fe742cf6a
-                }
-            </td>
-        </tr>
-
-
-// ADD MOVIE TO LIST OF FAVORITES
-            <tr>
-                <td>Allow users to add a movie to their list of favorites</td>
-                <td>users/:id/movieTitle</td>
-                <td>POST</td>
-                <td>Allows users to add a movie to their list of favorite movies</td>
-                <td>localhost:8080/users/1/movies/New%20Movie</td>
-                <td>Text that movie has been added to favorites.
-                    {
-                        Dumb and Dumber has been added to the list of favorites.
-                    }
-                </td>
-            </tr>
-
-
-//REMOVE MOVIE FROM LIST OF FAVORITES
-            <tr>
-                <td>Allow users to remove a movie from their list of favorites</td>
-                <td>users/:id/movies/movieTitle</td>
-                <td>DELETE</td>
-                <td>Allows users to delete a movie from their favorites</td>
-                <td>localhost:8080/users/1/movies/Dumb%20and$20Dumber</td>
-                <td>Text response that the movie has been removed from favorites
-                    {
-                        Dumb and Dumber has been removed from the favorites list.
-                    }
-                </td>
-            </tr>
-
-            
-//DEREGISTER AN EXISTING USER
-            <tr>
-                <td>Allow an existing user to deregister</td>
-                <td>users/deregister/:id</td>
-                <td>DELETE</td>
-                <td>Allows users to deregister their account from myFlix</td>
-                <td>localhost:8080/users/deregister/1</td>
-                <td>Text response that the user has been deregistered
-                    {
-                        "User 1 has been deregistered."
-                    }
-                </td>
-
-                
-
-            </tr>
-
-    </table>
+</table>
     
 </body>
 </html>
