@@ -98,6 +98,38 @@ A JSON object containing all data about a single genre including its name (e.g.,
         </td>
     </tr>
 
+<!-- RELEASE YEAR DATA -->
+    <tr>
+        <td>Return the release year of a movie</td>
+        <td>/movies/:movieName</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>
+A JSON object containing the movie name and release year.  
+{
+    "Name": "Inception",
+    
+    "Release Year": "2010"
+}           </pre>
+        </td>
+    </tr>
+
+<!-- ACTOR DATA -->
+    <tr>
+        <td>Return the actors that star in a movie</td>
+        <td>/movies/:movieName</td>
+        <td>GET</td>
+        <td><pre>None</pre></td>
+        <td> <pre>
+A JSON object containing the movie name and an array with the actors.  
+{
+"Name": "Inception",
+
+"Actors": [ "Lenoardo DiCaprio", "Joseph Gordon-Levitt", "Cillian Murphy" ]
+}           </pre>
+        </td>
+    </tr>
+
 <!-- DIRECTOR DATA -->
     <tr>
         <td>Return data about a director by name</td>
@@ -116,7 +148,7 @@ A JSON object containing all data about a director including name, bio and birth
         </td>
     </tr>
 
-<!-- REGISTER NEW USER     -->
+<!-- REGISTER NEW USER -->
     <tr>
         <td>Allow new users to register</td>
         <td>/users</td>
