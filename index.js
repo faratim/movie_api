@@ -1,64 +1,20 @@
-const express = require('express'),
-    morgan = require('morgan');
+const express = require('express');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
+
+const app = express();
+
+const Movies = Models.Movie;
+const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
     useNewURLParser: true, useUnifiedTopology: true
 });
 
-const app = express();
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const Movies = Models.Movie;
-const Users = Models.User;
-
-let allMovies = [
-    {
-        title: 'Shawshank Redemption',
-        year: '1994'
-    },
-    {
-        title: 'Forrest Gump',
-        year: '1994'
-    },
-    {
-        title: 'Inception',
-        year: '2010'
-    },
-    {
-        title: 'The Matrix',
-        year: '1999'
-    },
-    {
-        title: 'Star Wars',
-        year: '1977'
-    },
-    {
-        title: 'The Usual Suspects',
-        year: '1995'
-    },
-    {
-        title: 'Saw',
-        year: '2004'
-    },
-    {
-        title: 'Memento',
-        year: '2000'
-    },
-    {
-        title: 'Die Hard',
-        year: '1988'
-    },
-    {
-        title: 'Jurassic Park',
-        year: '1993'
-    }
-
-];
+app.use(bodyParser.json());
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -70,7 +26,7 @@ app.get('/', (req, res) => {
 
 // GET list of all movies
 app.get('/movies', (req, res) => {
-    res.json(allMovies);
+    res.json('Get request returning all data for all movies');
 });
 
 // GET data about a single movie
@@ -119,7 +75,11 @@ app.post('/users', (req, res) => {
         
                 
             }
-        });
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+    })
 });
 
 
@@ -138,7 +98,59 @@ app.delete('/users/:name', (req, res) => {
     res.send('DELETE a user from the database.');
 });
 
+//Get all users
+app.get('/users', (req, res) => {
+    Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
+//Get user by username
+app.get('/users/:Username', (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+        .then((user) => {
+            res.json(user);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+
+//Update a user's info, by username
+/* We'll expect JSON in this format
+{
+    Username: String, (required)
+    Password: String, (required)
+    Email: String, (required)
+    Birthday: Date
+}*/
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username },
+        {
+            $set:
+            {
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            }
+        },
+        { new: true },
+        (err, updatedUser) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                req.json(updatedUser);
+        }
+    })
+})
 
 
 //Error Handler
