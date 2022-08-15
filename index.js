@@ -1,7 +1,21 @@
+const mongoose = require('mongoose');
+const Models = require('models.js');
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+    useNewURLParser: true, useUnifiedTopology: true
+});
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+const bodyParser = require('body-parser');
+
 const express = require('express'),
     morgan = require('morgan');
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let allMovies = [
     {
@@ -76,9 +90,39 @@ app.get('/movies/directors/:name', (req, res) => {
 });
 
 // POST a new user to the user list
+/* We'll expect JSON in the this format
+{
+    ID: Integer,
+    Username: String,
+    Password: String,
+    Email: String,
+    Birthday: Date
+}*/
+
 app.post('/users', (req, res) => {
-    res.send(`POST request that checks for existing user, if user doesn't exist, it adds the user to the list`);
-})
+    Users.findOne({ Username: req.body.Username })
+        .then((user) => {
+            if (user) {
+                return res.status(400).send(req.body.Username + 'already exists.');
+            } else {
+                Users
+                    .create({
+                        Username: req.body.Username,
+                        Password: req.body.Password,
+                        Email: req.body.Email,
+                        Birthday: req.body.Birthday
+                    })
+                    .then((user) => { res.status(201).json(user) })
+                    .catch((error) => {
+                        console.error(error);
+                        res.status(500).send('Error: ' + error);
+                    })
+        
+                
+            }
+        });
+});
+
 
 // POST a new movie to the favorites list
 app.post('/users/:name/movies/:MovieID', (req, res) => {
@@ -108,3 +152,4 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log('Your app is listening on port 8080.');
 });
+
