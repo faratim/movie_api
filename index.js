@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Models = require('models.js');
+const Models = require('./models.js');
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
     useNewURLParser: true, useUnifiedTopology: true
