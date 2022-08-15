@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-let moviesSchema = mongoose.Schema({
+let movieSchema = mongoose.Schema({
     Title: { type: String, required: true },
     Description: { type: String, required: true },
     Genre: {
