@@ -51,33 +51,33 @@
 <!-- SINGLE MOVIE DATA -->
     <tr>
         <td>Return data about a single movie by title to the user</td>
-        <td>/movies/:title</td>
+        <td>/movies/:Title</td>
         <td>GET</td>
         <td><pre>None</pre></td>
         <td> <pre>
-A JSON object that contains data about a user selected movie including description, genre, director, image URL and whether it's featured or not: 
+A JSON object that contains data about a user selected movie including description, genre, director, image URL, actors, whether it's featured or not, and release year: 
 
 {
-    "Title": "Inception",
-
-    "Description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
-
     "Genre": {
-        "Name": "Thriller",
-    
-        "Description": "Thriller is a genre of fiction, having numerous, often overlapping subgenres. Thrillers are characterized and defined by the moods they elicit, giving viewers heightened feelings of suspense, excitement, surprise, anticipation and anxiety. Successful examples of thrillers are the films of Alfred Hitchcock.",
+        "Name": "Drama",
+        "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone. Drama of this kind is usually qualified with additional terms that specify its particular super-genre, macro-genre, or micro-genre, such as soap opera, police crime drama, political drama, legal drama, historical drama, domestic drama, teen drama, and comedy-drama (dramedy). These terms tend to indicate a particular setting or subject-matter, or else they qualify the otherwise serious tone of a drama with elements that encourage a broader range of moods. To these ends, a primary element in a drama is the occurrence of conflict—emotional, social, or otherwise—and its resolution in the course of the storyline."
     },
-
     "Director": {
-        "Name": "Christopher Nolan",
-        
-        "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
-
+        "Name": "Frank Darabont",
+        "Bio": "Three-time Oscar nominee Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France, the son of Hungarian parents who had fled Budapest during the failed 1956 Hungarian revolution. Brought to America as an infant, he settled with his family in Los Angeles and attended Hollywood High School. His first job in movies was as a production assistant on the 1981 low-budget film, Hell Night (1981), starring Linda Blair. He spent the next six years working in the art department as a set dresser and in set construction while struggling to establish himself as a writer. His first produced writing credit (shared) was on the 1987 film, A Nightmare on Elm Street 3: Dream Warriors (1987), directed by Chuck Russell.",
+        "Birth": "1959",
+        "Death": "N/A"
     },
-
-    "Image URL": "https://irs.www.warnerbros.com/keyart-jpeg/inception_keyart.jpg"
-
-    "Featured": true
+    "_id": "62f4750915030648fccdad72",
+    "Title": "Shawshank Redemption",
+    "Description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.",
+    "ImagePath": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg",
+    "Actors": [
+        "Morgan Freeman",
+        "Tim Robbins"
+    ],
+    "Featured": true,
+    "ReleaseYear": 1994
 }           </pre>
         </td>
     </tr>
@@ -85,11 +85,11 @@ A JSON object that contains data about a user selected movie including descripti
 <!-- GENRE DATA -->
     <tr>
         <td>Return data about a genre</td>
-        <td>/movies/genre/genreName</td>
+        <td>/genres/:Name</td>
         <td>GET</td>
         <td><pre>None</pre></td>
         <td> <pre>
-A JSON object containing all data about a single genre including its name (e.g., "Thriller") and description.  
+A JSON object containing all data about a single genre including its name (e.g., "Thriller") and description:
 {
     "Name": "Thriller",
     
@@ -101,52 +101,35 @@ A JSON object containing all data about a single genre including its name (e.g.,
 <!-- RELEASE YEAR DATA -->
     <tr>
         <td>Return the release year of a movie</td>
-        <td>/movies/:movieName</td>
+        <td>/year/:movieTitle</td>
         <td>GET</td>
         <td><pre>None</pre></td>
         <td> <pre>
-A JSON object containing the movie name and release year.  
+A JSON object containing the release year.  
 {
-    "Name": "Inception",
-    
-    "Release Year": "2010"
+    2010
 }           </pre>
         </td>
     </tr>
 
-<!-- ACTOR DATA -->
-    <tr>
-        <td>Return the actors that star in a movie</td>
-        <td>/movies/:movieName</td>
-        <td>GET</td>
-        <td><pre>None</pre></td>
-        <td> <pre>
-A JSON object containing the movie name and an array with the actors.  
-{
-"Name": "Inception",
-
-"Actors": [ "Lenoardo DiCaprio", "Joseph Gordon-Levitt", "Cillian Murphy" ]
-}           </pre>
-        </td>
-    </tr>
 
 <!-- DIRECTOR DATA -->
     <tr>
         <td>Return data about a director by name</td>
-        <td>/movies/directors/:directorName</td>
+        <td>/directors/:directorName</td>
         <td>GET</td>
         <td><pre>None</pre></td>
         <td> <pre>
-A JSON object containing all data about a director including name, bio and birth year.  
+A JSON object containing all data about a director including name, bio and birth year:
 {
     "Name": "Christopher Nolan",
-
-    "Birth Year": 1970
-    
-    "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made."
+    "Bio": "Best known for his cerebral, often nonlinear, storytelling, acclaimed writer-director Christopher Nolan was born on July 30, 1970, in London, England. Over the course of 15 years of filmmaking, Nolan has gone from low-budget independent films to working on some of the biggest blockbusters ever made. At 7 years old, Nolan began making short movies with his father's Super-8 camera. While studying English Literature at University College London, he shot 16-millimeter films at U.C.L.'s film society, where he learned the guerrilla techniques he would later use to make his first feature, Following (1998), on a budget of around $6,000. The noir thriller was recognized at a number of international film festivals prior to its theatrical release and gained Nolan enough credibility that he was able to gather substantial financing for his next film.",
+    "Birth": "1970",
+    "Death": "N/A"
 }           </pre>   
         </td>
     </tr>
+
 
 <!-- REGISTER NEW USER -->
     <tr>
@@ -154,27 +137,25 @@ A JSON object containing all data about a director including name, bio and birth
         <td>/users</td>
         <td>POST</td>
         <td> <pre>
-A JSON object with the user's name and favorite movies
+A JSON object with the username*, password*, email*, and birthday:
 {
-    "name": "John Smith",
-    "favoriteMovies": [
-        "Twilight",
-        "The Notebook"
-    ]   
-}           </pre>
+    "Username" : "testuser123",
+    "Password" : "testpassword123",
+    "Email" : "email@no.no",
+    "Birthday": "1970-01-20T00:00:00.000Z"
+}          </pre>
             
         </td>
         <td> <pre>
 A JSON object with data about the new user including their name, favorite movies and user id.
 {
-    "name": "Jane Doe",
-    
-    "favoriteMovies": [
-    "Animal World",
-    "Pulp Fiction"
-    ],
-    
-    "id": "77c384ff-6c12-4b16-bebc-ee347468ad77"
+    "Username": "testuser123",
+    "Password": "testpassword123",
+    "Email": "email@no.no",
+    "Birthday": "1970-01-20T00:00:00.000Z",
+    "FavoriteMovies": [],
+    "_id": "62fc1686553e3b6eacf8f259",
+    "__v": 0
 }           </pre>
         </td>
     </tr>
@@ -187,23 +168,30 @@ A JSON object with data about the new user including their name, favorite movies
         <td>/users/:id</td>
         <td>POST</td>
         <td> <pre>
-JSON object with data about user
-
-localhost:8080/users/1
+JSON object with updated data about user:
 
 {
-    "Username" : "newUsername"
+    "Username": "dwight",
+    "Password": "schrutefarms",
+    "Email": "dwight@dm.com",
+    "Birthday": "1970-01-20T00:00:00.000Z"
 }           </pre>
         </td>
         <td> <pre>
 A JSON object with the updated information about the user.
 {
-    "Name": "Robert",
-    "Email": "bobby@email.com",
-    "Password": "password123",
-    "favoriteMovies": [],
-    "id": 8a767ba9-2efc-46bf-86f0-443fe742cf6a
-}           </pre> 
+    "_id": "62f4fb3815030648fccdad82",
+    "Name": "Dwight Schrute",
+    "Username": "dwight",
+    "Password": "schrutefarms",
+    "Email": "dwight@dm.com",
+    "Birthday": "1970-01-20T00:00:00.000Z",
+    "FavoriteMovies": [
+        "62f4750915030648fccdad72",
+        "62f4f73915030648fccdad79",
+        "62f4f7e615030648fccdad7d"
+    ]
+}          </pre> 
         </td>
     </tr>
 
@@ -211,14 +199,25 @@ A JSON object with the updated information about the user.
 <!-- ADD MOVIE TO LIST OF FAVORITES -->
         <tr>
             <td>Allow users to add a movie to their list of favorites</td>
-            <td>users/:id/movieTitle</td>
+            <td>users/:Username/movies/movieID</td>
             <td>POST</td>
-            <td><pre>localhost:8080/users/1/movies/New%20Movie</pre></td>
+            <td><pre>None</pre></td>
             <td> <pre>
-Text that movie has been added to favorites.
+A JSON object with the user information, including their list of favorites:
 {
-    Dumb and Dumber has been added to the list of favorites.
-}               </pre>
+    "_id": "62f4fb3815030648fccdad82",
+    "Name": "Dwight Schrute",
+    "Username": "dwight",
+    "Password": "schrutefarms",
+    "Email": "dwight@dm.com",
+    "Birthday": "1970-01-20T00:00:00.000Z",
+    "FavoriteMovies": [
+        "62f4750915030648fccdad72",
+        "62f4f73915030648fccdad79",
+        "62f4f7e615030648fccdad7d",
+        "62f4f70715030648fccdad74"
+    ]
+}              </pre>
             </td>
         </tr>
 
@@ -226,28 +225,38 @@ Text that movie has been added to favorites.
 <!-- REMOVE MOVIE FROM LIST OF FAVORITES -->
         <tr>
             <td>Allow users to remove a movie from their list of favorites</td>
-            <td>users/:id/movies/movieTitle</td>
+            <td>users/:Username/movies/:movieID</td>
             <td>DELETE</td>
-            <td><pre>localhost:8080/users/1/movies/Dumb%20and$20Dumber</pre></td>
+            <td><pre>None</pre></td>
             <td> <pre>
-Text response that the movie has been removed from favorites
+A JSON object with the user information, including their list of favorites:
 {
-    Dumb and Dumber has been removed from the favorites list.
-}               </pre>    
+    "_id": "62f4fb3815030648fccdad82",
+    "Name": "Dwight Schrute",
+    "Username": "dwight",
+    "Password": "schrutefarms",
+    "Email": "dwight@dm.com",
+    "Birthday": "1970-01-20T00:00:00.000Z",
+    "FavoriteMovies": [
+        "62f4750915030648fccdad72",
+        "62f4f73915030648fccdad79",
+        "62f4f7e615030648fccdad7d"
+    ]
+}              </pre>    
             </td>
         </tr>
 
 
-<!-- DEREGISTER AN EXISTING USER -->
+<!-- DELETE AN EXISTING USER -->
         <tr>
             <td>Allow an existing user to deregister</td>
-            <td>users/:name</td>
+            <td>users/:Username</td>
             <td>DELETE</td>
-            <td><pre>localhost:8080/users/deregister/1</pre></td>
+            <td><pre>None</pre></td>
             <td> <pre>
 Text response that the user has been deregistered
 {
-    "User 1 has been deregistered."
+    "testuser was deleted."
 }               </pre>
             </td>
         </tr>
