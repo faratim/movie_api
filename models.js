@@ -1,3 +1,4 @@
+const { isInteger } = require('lodash');
 const { default: mongoose } = require('mongoose');
 
 const movieSchema = mongoose.Schema({
@@ -13,7 +14,8 @@ const movieSchema = mongoose.Schema({
     },
     Actors: [String],
     ImagePath: String,
-    Featured: Boolean
+    Featured: Boolean,
+    ReleaseDate: Number
 });
 
 const userSchema = mongoose.Schema({
