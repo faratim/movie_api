@@ -1,54 +1,72 @@
-// **~~~~~~~  IMPORTS  ~~~~~~~** //
-
+/* eslint-disable no-console */
+// IMPORTS
 const express = require('express');
 const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
-const Models = require('./models.js');
+const cors = require('cors');
+const passport = require('passport');
 const { check, validationResult } = require('express-validator');
+const Models = require('./models');
 
-// Initiate Express
+// Configure Express Module
 const app = express();
 
-
-// Initiate Mongoose Module
+// Configure Mongoose Module
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect([process.env.CONNECTION_URI], {
-    useNewURLParser: true, useUnifiedTopology: true
+// const URI = 'mongodb://localhost:27017/movie-api'; // Database Option 1: Local DB
+const URI = process.env.CONNECTION_URI; // Database Option 2: Hosted DB
+
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Configure logging file access
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+  flags: 'a',
 });
 
-//FOR LOCAL HOSTING
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-//     useNewURLParser: true, useUnifiedTopology: true
-// });
+// Configure Allowed Domains for Cross-Origin Resource Sharing (CORS)
+const allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
+// Configure Date-Time Middleware
+const requestTime = (req, res, next) => {
+  req.requestTime = Date.now();
+  next();
+};
 
 // Use Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(requestTime);
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(express.static('public'));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+  next();
+});
 
-const cors = require('cors');
-app.use(cors());
-
-// let allowedOrigins = ['http://localhost:8080', 'https://faraflix.herokuapp.com'];
-// app.use(cors({
-//     origin: (origin, callback) => {
-//         if (!origin) return callback(null, true);
-//         if (allowedOrigins.indexOf(origin) === -1) {
-//             let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-//             return callback(new Error(messsage), false);
-//         }
-//         return callback(null, true);
+app.use(cors()); // CORS Option 1: Allow all domains
+// app.use(cors({ // CORS Option 2: Only allow specific domains (see the variable: allowedOrigins)
+//   origin: (origin, callback) => {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const message = `The CORS policy for this application doesnt allow access from this origin: ${origin}`;
+//       return callback(new Error(message), false);
 //     }
+//     return callback(null, true);
+//   },
 // }));
 
-let auth = require('./auth')(app);
-const passport = require('passport');
+// AUTHENTICATION
+const auth = require('./auth')(app);
 require('./passport');
-app.use(bodyParser.json());
-
-app.use(morgan('common'));
-app.use(express.static('public'));
 
 
 // **~~~~~~~  REQUESTS  ~~~~~~~** //
@@ -310,7 +328,7 @@ app.use((err, req, res, next) => {
 
 // Listen for Requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0',() => {
     console.log('Listening on Port ' + port);
 });
 
