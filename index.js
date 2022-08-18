@@ -28,7 +28,7 @@ mongoose.connect([process.env.CONNECTION_URI], {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'https://faraflix.herokuapp.com'];
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
