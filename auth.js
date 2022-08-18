@@ -1,10 +1,12 @@
+// *------- IMPORTS ------- //
+
 const jwtSecret = 'your_jwt_secret';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 require('./passport');
 
-
+// Configure JWT Token
 const generateJWTToken = (user) => {
     return jwt.sign(user, jwtSecret, {
         subject: user.Username,

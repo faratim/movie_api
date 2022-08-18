@@ -1,3 +1,4 @@
+// *------- IMPORTS -------* //
 const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     Models = require('./models.js'),
@@ -7,6 +8,8 @@ let Users = Models.User,
     JWTStrategy = passportJWT.Strategy,
     ExtractJWT = passportJWT.ExtractJwt;
 
+
+// *------- STRATEGIES -------* //
 passport.use(new LocalStrategy({
     usernameField: 'Username',
     passwordField: 'Password'

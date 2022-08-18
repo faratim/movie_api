@@ -1,8 +1,9 @@
+// *------- IMPORTS -------* //
 const { isInteger } = require('lodash');
 const { default: mongoose } = require('mongoose');
-
 const bcrypt = require('bcrypt');
 
+// *------- SCHEMAS -------* //
 const movieSchema = mongoose.Schema({
     Title: { type: String, required: true },
     Description: { type: String, required: true },
@@ -36,8 +37,10 @@ userSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.Password);
 };
 
+// *------- MODELS -------* //
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 
+// *------- EXPORTS -------* //
 module.exports.Movie = Movie;
 module.exports.User = User;

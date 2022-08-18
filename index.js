@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-// IMPORTS
+
+// *------- IMPORTS -------* //
 const express = require('express');
 const morgan = require('morgan');
 const fs = require('fs');
@@ -12,10 +13,10 @@ const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 const Models = require('./models');
 
-// Configure Express Module
+// Express Module
 const app = express();
 
-// Configure Mongoose Module
+// Mongoose Module
 const Movies = Models.Movie;
 const Users = Models.User;
 // const URI = 'mongodb://localhost:27017/movie-api'; // Database Option 1: Local DB
@@ -23,21 +24,21 @@ const URI = process.env.CONNECTION_URI; // Database Option 2: Hosted DB
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Configure logging file access
+// File logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
 
-// Configure Allowed Domains for Cross-Origin Resource Sharing (CORS)
-const allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+// Allowed Domains for Cross-Origin Resource Sharing (CORS)
+const allowedOrigins = ['http://localhost:8080', 'https://faraflix.herokuapp.com'];
 
-// Configure Date-Time Middleware
+// Date-Time Middleware
 const requestTime = (req, res, next) => {
   req.requestTime = Date.now();
   next();
 };
 
-// Use Middleware
+// Middleware
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(requestTime);
 app.use(bodyParser.urlencoded({
@@ -64,12 +65,12 @@ app.use(cors()); // CORS Option 1: Allow all domains
 //   },
 // }));
 
-// AUTHENTICATION
+// Authentication
 const auth = require('./auth')(app);
 require('./passport');
 
 
-// **~~~~~~~  REQUESTS  ~~~~~~~** //
+// *------- REQUESTS -------* //
 
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix!')
@@ -286,31 +287,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (
             } else {
                 res.status(200).send(req.params.Username + ' was deleted.');
             }
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
-
-
-// GET - All Users
-app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
-    Users.find()
-        .then((users) => {
-            res.status(201).json(users);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
-
-// GET - User by Username
-app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-        .then((user) => {
-            res.json(user);
         })
         .catch((err) => {
             console.error(err);
