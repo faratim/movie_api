@@ -30,7 +30,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
 });
 
 // Allowed Domains for Cross-Origin Resource Sharing (CORS)
-const allowedOrigins = ['http://localhost:8080', 'https://faraflix.herokuapp.com'];
+const allowedOrigins = ['localhost:1234','http://localhost:8080', 'https://faraflix.herokuapp.com'];
 
 // Date-Time Middleware
 const requestTime = (req, res, next) => {
@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 
 // GET - All Movies
 app.get('/movies',
-    // passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwt', { session: false }),
     (req, res) => {
     Movies.find()
         .then((movies) => {
