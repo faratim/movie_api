@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 // *------- IMPORTS -------* //
 const express = require('express');
 const morgan = require('morgan');
@@ -12,7 +10,6 @@ const cors = require('cors');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 const Models = require('./models');
-const { slice } = require('lodash');
 
 // Express Module
 const app = express();
