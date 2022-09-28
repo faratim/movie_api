@@ -12,6 +12,7 @@ const cors = require('cors');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 const Models = require('./models');
+const { slice } = require('lodash');
 
 // Express Module
 const app = express();
@@ -22,7 +23,7 @@ const Users = Models.User;
 // const URI = 'mongodb://localhost:27017/movie-api'; // Database Option 1: Local DB
 // const URI = process.env.CONNECTION_URI; // Database Option 2: Hosted DB
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://faratim:timfara@myflixdb.iymuhs6.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // File logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
