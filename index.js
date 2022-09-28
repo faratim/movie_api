@@ -23,7 +23,8 @@ const Movies = Models.Movie,
 
 mongoose.connect('mongodb+srv://faratim:timfara@myflixdb.iymuhs6.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+    useUnifiedTopology: true,
+    dbName: 'myFlixDB'
 });
 
 // Configure logging file access
@@ -82,8 +83,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to myFlix App!');
 });
 
+
 // READ - Gets a list of all the movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies',
+    passport.authenticate('jwt', { session: false }), 
+    (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(200).json(movies);
