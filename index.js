@@ -20,9 +20,9 @@ const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
 // const URI = 'mongodb://localhost:27017/movie-api'; // Database Option 1: Local DB
-const URI = process.env.CONNECTION_URI; // Database Option 2: Hosted DB
+// const URI = process.env.CONNECTION_URI; // Database Option 2: Hosted DB
 
-mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // File logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
