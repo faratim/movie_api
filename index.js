@@ -199,6 +199,36 @@ app.get('/year/:Title', passport.authenticate('jwt', {session: false}), (req, re
       );
 
 
+// READ - Get all users
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.find()
+      .then((users) => {
+        res.status(200).json(users);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error ' + err);
+      });
+  });
+  
+  // READ - Get user by username
+  app.get('/users/:userName', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { userName } = req.params;
+    console.log(userName);
+    Users.findOne({ Username: userName })
+      .then((user) => {
+        if (user) {
+          res.status(200).json(user);
+        } else {
+          res.status(401).send(`A user with the username "${userName}" does not exist.`);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error ' + err);
+      });
+  });
+      
 //PUT - Update User Info by Username
     /* Expects JSON in this format:
     {
