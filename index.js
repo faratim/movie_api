@@ -83,7 +83,7 @@ require('./passport');
 //ROUTING
 //Home
 app.get('/', (req, res) => {
-    res.send('Welcome to myFlix App!');
+    res.send('Welcome to the myFlix App!');
 });
 
 // READ - Gets a list of all the movies
