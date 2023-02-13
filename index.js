@@ -52,6 +52,8 @@ let allowedOrigins = [
     'http://localhost:1234',
     'https://faraflix.herokuapp.com',
     'https://my-flixx.netlify.app',
+    'https://faratim.github.io/myFlix-angular-live/welcome',
+    'https://faratim.github.io/myFlix-angular-live/',
 ];
 
 app.use(
