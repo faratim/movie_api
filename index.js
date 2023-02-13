@@ -44,9 +44,9 @@ const cors = require('cors');
 // Option 2: only allow domains in 'allowed origins'
 let allowedOrigins = [
     '*',
-    'https://faratim.github.io/',
+    'https://faratim.github.io',
     'http://localhost:4200',
-    'http://localhost:54802/',
+    'http://localhost:54802',
     'http://localhost',
     'http://localhost:8080',
     'http://localhost:1234',
